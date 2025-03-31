@@ -27,7 +27,7 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
         //1. 获取请求头中的token
         String token = request.getHeader("authorization");
         if (StrUtil.isBlank(token)) {
-            return false;
+            return true;
         }
         //2. 获取session中的用户
         String key= RedisConstants.LOGIN_USER_KEY + token;
