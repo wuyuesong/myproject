@@ -1,7 +1,6 @@
-package com.hmdp.controller;
+package com.hmdp.dto;
 
 
-import com.hmdp.dto.Result;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
