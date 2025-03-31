@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 
+import static com.hmdp.utils.SystemConstants.USER_NICK_NAME_PREFIX;
+
 /**
  * <p>
  * 服务实现类
@@ -52,7 +54,40 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public Result login(LoginFormDTO loginForm, HttpSession session) {
         //1.校验
+        String phone = loginForm.getPhone();
+        if (RegexUtils.isPhoneInvalid(phone)) {
+            //2 如果不符合，返回错误信息
+            return Result.fail("手机号格式错误!");
+        }
+        //2.校验验证码
+        Object casheCode = session.getAttribute("code");
+        String code = loginForm.getCode();
+        if (casheCode == null || !casheCode.toString().equals(code)) {
+            //3. 不一致，报错
+            System.out.println("casheCode: " + casheCode);
+            System.out.println("code" + code);
+            return Result.fail("验证码错误");
+        }
 
-        return null;
+        //4.一致，根据手机号查询用户
+        User user = query().eq("phone", phone).one();
+
+        //5.判断用户是否存在
+        if (user == null) {
+            //6 不存在，创建新用户并保存
+            user = createUserWithPhone(phone);
+        }
+
+        //7 保存用户信息到session中
+        session.setAttribute("user", user);
+        return Result.ok();
+    }
+
+    private User createUserWithPhone(String phone) {
+        User user = new User();
+        user.setPhone(phone);
+        user.setNickName(USER_NICK_NAME_PREFIX + RandomUtil.randomString(10));
+        save(user);
+        return user;
     }
 }
