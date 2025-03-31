@@ -6,7 +6,23 @@ services:
       - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=demo_proto
+      - MYSQL_DATABASE=demo
+      - MYSQL_DEFAULT_AUTHENTICATION_PLUGIN=mysql_native_password
     volumes:
       - ./db/sql/ini:/docker-entrypoint-initdb.d
       - ./mysql/data:/var/lib/mysql
+
+  redis:
+    image: redis:7.0
+    container_name: redis7
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    environment:
+      - TZ=Asia/Shanghai
+      - REDIS_PASSWORD=123456  # 设置访问密码
+    volumes:
+      - ./redis/data:/data                   # 持久化数据目录
+      - ./redis/config/redis.conf:/usr/local/etc/redis/redis.conf  # 配置文件
+      - ./redis/logs:/logs                   # 日志目录
+    command: redis-server /usr/local/etc/redis/redis.conf
