@@ -208,7 +208,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
         //1. 更新数据库
         updateById(shop);
         //2.删除缓存
-        stringRedisTemplate.delete(CACHE_SHOP_KEY + id);
+//        stringRedisTemplate.delete(CACHE_SHOP_KEY + id);
         return Result.ok();
     }
 }

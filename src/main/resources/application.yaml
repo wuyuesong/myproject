@@ -5,11 +5,11 @@ spring:
     name: hmdp
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/demo?useSSL=false&&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql://192.168.146.128:3306/demo?useSSL=false&&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
     password: root
   redis:
-    host: 127.0.0.1
+    host: 192.168.146.128
     port: 6379
     password:
     lettuce:
@@ -18,13 +18,24 @@ spring:
         max-idle: 10
         min-idle: 1
         time-between-eviction-runs: 10s
+#  jackson:
+#    default-property-inclusion: non_null # JSON处理时忽略非空字段
   jackson:
-    default-property-inclusion: non_null # JSON处理时忽略非空字段
+    date-format: yyyy-MM-dd HH:mm:ss  # 全局日期格式
+    time-zone: GMT+8                  # 时区设置
+    serialization:
+      write-dates-as-timestamps: false # 禁用时间戳
 mybatis-plus:
   type-aliases-package: com.hmdp.entity # 别名扫描包
 logging:
   level:
     com.hmdp: debug
+
+canal:
+  server: 127.0.0.1:11111
+  destination: example
+
+
 
 
 rocketmq:

@@ -67,10 +67,10 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
 
     private  IVoucherOrderService proxy;
 
-    @PostConstruct
-    private  void init() {
-        SECKILL_ORDER_EXECUTOR.submit(new VourcherOrderHandler());
-    }
+//    @PostConstruct
+//    private  void init() {
+//        SECKILL_ORDER_EXECUTOR.submit(new VourcherOrderHandler());
+//    }
 
 //    private class  VourcherOrderHandler implements Runnable{
 //
@@ -90,7 +90,7 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
 //    }
 
     private void handlePendingList() {
-        String queueName = "streams.orders";
+        String queueName = "stream.orders";
         while(true) {
             //1. 获取队列中的订单信息
             try {
@@ -121,7 +121,7 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
     }
 
     private class  VourcherOrderHandler implements Runnable{
-        String queueName = "streams.orders";
+        String queueName = "stream.orders";
         @Override
         public void run() {
             while(true) {
