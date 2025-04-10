@@ -107,7 +107,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
         if (top5 == null || top5.isEmpty()) {
             return Result.ok(Collections.emptyList());
         }
-        String idStr = StrUtil.join(",", ids);
+        String idStr = StrUtil.join(",", top5);
         List<Long> ids = top5.stream().map(Long::valueOf).collect(Collectors.toList());
         List<UserDTO> userDTOs = userService.query().in("id", ids)
                 .last("ORDER BY FIELD(id," + idStr + ")")
