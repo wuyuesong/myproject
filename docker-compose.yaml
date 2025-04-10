@@ -1,7 +1,7 @@
 version: "3"
 services:
   mysql:
-    image: "mysql:latest"
+    image: "mysql:8.0"
     ports:
       - 3306:3306
     environment:
@@ -11,6 +11,7 @@ services:
     volumes:
       - ./db/sql/ini:/docker-entrypoint-initdb.d
       - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf/my.ini:/etc/mysql/conf.d/my.cnf
 
   redis:
     image: redis:7.0
