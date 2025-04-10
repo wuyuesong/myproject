@@ -25,3 +25,27 @@ mybatis-plus:
 logging:
   level:
     com.hmdp: debug
+
+
+rocketmq:
+  name-server: 127.0.0.1:9876 # name server 地址
+  producer:
+    group: xiaohashu_group
+    send-message-timeout: 3000 # 消息发送超时时间，默认 3s
+    retry-times-when-send-failed: 3 # 同步发送消息失败后，重试的次数
+    retry-times-when-send-async-failed: 3 # 异步发送消息失败后，重试的次数
+    max-message-size: 4096 # 消息最大大小（单位：字节）
+  consumer:
+    group: xiaohashu_group
+    pull-batch-size: 5 # 每次拉取的最大消息数
+
+jwt:
+  #    # 设置jwt签名加密时使用的秘钥
+  #    admin-secret-key: itcast
+  #    # 设置jwt过期时间
+  #    admin-ttl: 7200000
+  #    # 设置前端传递过来的令牌名称
+  #    admin-token-name: token
+  user-secret-key: ThisIsA32BytesLongSecretKeyForHS256
+  user-ttl: 7200000
+  user-token-name: authorization
